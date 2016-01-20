@@ -776,7 +776,7 @@ static gboolean ibus_unikey_engine_process_key_event_preedit(IBusEngine* engine,
             {
                 unikey->preeditstr->clear();
                 ibus_engine_hide_preedit_text(engine);
-                unikey->auto_commit = true;
+                //unikey->auto_commit = true;
             }
             else
             {
@@ -800,7 +800,7 @@ static gboolean ibus_unikey_engine_process_key_event_preedit(IBusEngine* engine,
                     unikey->preeditstr->append((const gchar*)buf, CONVERT_BUF_SIZE - bufSize);
                 }
 
-                unikey->auto_commit = false;
+                //unikey->auto_commit = false;
                 ibus_unikey_engine_update_preedit_string(engine, unikey->preeditstr->c_str(), true);
             }
         }
@@ -814,7 +814,7 @@ static gboolean ibus_unikey_engine_process_key_event_preedit(IBusEngine* engine,
     }
 
     // capture ascii printable char
-    else if ((keyval >= IBUS_space && keyval <=IBUS_asciitilde)
+    else if ((keyval >= IBUS_space && keyval <= IBUS_asciitilde)
             || keyval == IBUS_Shift_L || keyval == IBUS_Shift_R) // sure this have IBUS_SHIFT_MASK
     {
         static guint i;
@@ -825,18 +825,19 @@ static gboolean ibus_unikey_engine_process_key_event_preedit(IBusEngine* engine,
 
         // auto commit word that never need to change later in preedit string (like consonant - phu am)
         // if macro enabled, then not auto commit. Because macro may change any word
-        if (unikey->ukopt.macroEnabled == 0 && (UnikeyAtWordBeginning() || unikey->auto_commit))
-        {
-            for (i =0; i < sizeof(WordAutoCommit); i++)
-            {
-                if (keyval == WordAutoCommit[i])
-                {
-                    UnikeyPutChar(keyval);
-                    unikey->auto_commit = true;
-                    return false;
-                }
-            }
-        } // end auto commit
+        //no auto commit
+//        if (unikey->ukopt.macroEnabled == 0 && (UnikeyAtWordBeginning() || unikey->auto_commit))
+//        {
+//            for (i =0; i < sizeof(WordAutoCommit); i++)
+//            {
+//                if (keyval == WordAutoCommit[i])
+//                {
+//                    UnikeyPutChar(keyval);
+//                    unikey->auto_commit = true;
+//                    return false;
+//                }
+//            }
+//        } // end auto commit
 
         if ((unikey->im == UkTelex || unikey->im == UkSimpleTelex2)
             && unikey->process_w_at_begin == false
@@ -856,7 +857,7 @@ static gboolean ibus_unikey_engine_process_key_event_preedit(IBusEngine* engine,
             }
         }
 
-        unikey->auto_commit = false;
+        //unikey->auto_commit = false;
 
         // shift + space, shift + shift event
         if ((unikey->last_key_with_shift == false && modifiers & IBUS_SHIFT_MASK
