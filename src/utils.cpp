@@ -56,7 +56,7 @@ IBusComponent* ibus_unikey_get_component()
                                    PACKAGE_BUGREPORT,
                                    "",
                                    PACKAGE_NAME);
-    
+
 #if IBUS_CHECK_VERSION(1,3,99)
     engine = ibus_engine_desc_new_varargs ("name",        "Unikey",
                                            "longname",    "Unikey",
@@ -65,7 +65,7 @@ IBusComponent* ibus_unikey_get_component()
                                            "license",     "GPLv3",
                                            "author",      "Lê Quốc Tuấn <mr.lequoctuan@gmail.com>",
                                            "icon",        PKGDATADIR"/icons/ibus-unikey.png",
-                                           "layout",      "us",
+                                           "layout",      "default",
                                            "rank",        99,
                                            "setup",       LIBEXECDIR "/ibus-setup-unikey",
                                            NULL);
@@ -209,4 +209,3 @@ char* ibus_property_get_key(IBusProperty *prop)
     return prop->key;
 }
 #endif
-
